@@ -1,23 +1,23 @@
 from fastapi import FastAPI, APIRouter, Body, Request, Response, HTTPException, status
 from dotenv import dotenv_values
-from .models import User, all_users
-from .config import collection
+from .models import ShirtClass, all_shirts
+from .config import shirts_db
 
 app = FastAPI()
 router = APIRouter()
 
-@router.get("/users")
-async def get_all_users():
+@router.get("/shirts")
+async def get_all_shirts():
     try:
         data = list(collection.find())
-        return all_users(data)
+        return all_shirts(data)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error fetching users: {e}")
+        raise HTTPException(status_code=500, detail=f"Error fetching shirts: {e}")
 
-@router.post("/users")
-async def create_user(new_user: User):
+@router.post("/shirts")
+async def create_user(new_shirt: ShirtClass):
     try:
-        resp = collection.insert_one(dict(new_user))
+        resp = collection.insert_one(dict(new_shirt))
         return {"status_code": 200, "id": str(resp.inserted_id)}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error occurred: {e}")
