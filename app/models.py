@@ -19,9 +19,9 @@ def shirt_return(shirt):
         "test_value3": shirt["test_value3"]
     }
 
-def return_value2(shirts,value):
-    return [shirt_return(shirt) for shirt in shirts if (shirt.get("test_value2") == value)]
+def return_value2(all_shirts,value):
+    return [shirt_return(shirt) for shirt in all_shirts if (shirt.get("test_value2") == value)]
 
 
-def all_shirts(shirts):
-    return [shirt_return(shirt) for shirt in shirts]
+def all_shirts(all_shirts):
+    return [shirt_return(shirt) for shirt in all_shirts]
