@@ -2,16 +2,19 @@
 variable "service_name" {
   description = "Name of the microservice"
   type        = string
+  default     = "FF-Recom"
 }
 
 variable "container_image" {
   description = "Docker image for the microservice"
   type        = string
+  default     = "mcarroll321/recom-test:latest"
 }
 
 variable "container_port" {
   description = "Port the container exposes"
   type        = number
+  default     = 8080
 }
 
 variable "desired_count" {
@@ -35,11 +38,13 @@ variable "memory" {
 variable "vpc_id" {
   description = "ID of the VPC"
   type        = string
+  default     = "vpc-009b673acd08290d8"
 }
 
 variable "subnet_ids" {
   description = "Subnet IDs for the service"
   type        = list(string)
+  default     = ["subnet-0e669f11a52309ead", "subnet-073a47939db6ba8fc"]
 }
 
 variable "environment_variables" {
