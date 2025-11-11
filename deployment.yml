@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ff-recom-kube
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: ff-recom-kube
+    spec:
+      containers:
+      - name: ff-recom-kube
+        image: mcarroll321/ff-recom
+        ports:
+        - containerPort: 8000
+  selector:
+    matchLabels:
+      app: ff-recom-kube
