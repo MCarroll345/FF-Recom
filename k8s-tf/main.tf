@@ -2,66 +2,103 @@ terraform {
   required_version = ">= 1.0.0, < 2.0.0"
 
   required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 6.20.0"
+    }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.0"
+      version = "~> 2.38.0"
     }
   }
 }
 
-locals {
-  pod_labels = {
-    app = var.name
+data "terraform_remote_state" "eks" {
+  backend = "local"
+
+  config = {
+    path = "../aws-tf/terraform.tfstate"
   }
 }
 
-# Create a simple Kubernetes Deployment to run an app
-resource "kubernetes_deployment" "app" {
+data "aws_eks_cluster" "cluster" {
+  name = data.terraform_remote_state.eks.outputs.cluster_name
+}
+
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.cluster.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    command     = "aws"
+    args = [
+      "eks",
+      "get-token",
+      "--cluster-name",
+      data.aws_eks_cluster.cluster.name
+    ]
+  }
+}
+
+resource "kubernetes_deployment" "nginx" {
   metadata {
-    name = var.name
+    name = "ffrecomapp"
+    labels = {
+      App = "FF-recom-app"
+    }
   }
 
   spec {
-    replicas = var.replicas
-
+    replicas = 2
+    selector {
+      match_labels = {
+        App = "FF-recom-app"
+      }
+    }
     template {
       metadata {
-        labels = local.pod_labels
+        labels = {
+          App = "FF-recom-app"
+        }
       }
-
       spec {
         container {
-          name  = var.name
-          image = var.image
+          image = "mcarroll321/ff-recom"
+          name  = "ffrecomcontainer"
 
           port {
-            container_port = var.container_port
+            container_port = 8000
           }
 
+          resources {
+            limits = {
+              cpu    = "0.5"
+              memory = "512Mi"
+            }
+            requests = {
+              cpu    = "250m"
+              memory = "50Mi"
+            }
+          }
         }
       }
     }
-
-    selector {
-      match_labels = local.pod_labels
-    }
   }
 }
 
-# Create a simple Kubernetes Service to spin up a load balancer in front
-# of the app in the Kubernetes Deployment.
-resource "kubernetes_service" "app" {
+resource "kubernetes_service" "nginx" {
   metadata {
-    name = var.name
+    name = "ffrecomservice"
   }
-
   spec {
-    type = "LoadBalancer"
+    selector = {
+      App = kubernetes_deployment.nginx.spec.0.template.0.metadata[0].labels.App
+    }
     port {
       port        = 8000
-      target_port = var.container_port
-      protocol    = "TCP"
+      target_port = 8000
     }
-    selector = local.pod_labels
+
+    type = "LoadBalancer"
   }
 }
