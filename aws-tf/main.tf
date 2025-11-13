@@ -4,8 +4,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.0"
-      region = "eu-west-1"
+      version = "~> 6.20.0"
     }
   }
 }
@@ -13,7 +12,7 @@ terraform {
 resource "aws_eks_cluster" "cluster" {
   name     = var.name
   role_arn = aws_iam_role.cluster.arn
-  version  = "1.21"
+  version  = "1.34"
 
   vpc_config {
     subnet_ids = data.aws_subnets.default.ids
