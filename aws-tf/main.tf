@@ -18,6 +18,10 @@ resource "aws_eks_cluster" "cluster" {
     subnet_ids = data.aws_subnets.default.ids
   }
 
+  access_config {
+    authentication_mode = "API"
+  }
+
   # Ensure that IAM Role permissions are created before and deleted after
   # the EKS Cluster. Otherwise, EKS will not be able to properly delete
   # EKS managed EC2 infrastructure such as Security Groups.
@@ -68,6 +72,22 @@ resource "aws_eks_node_group" "nodes" {
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
   ]
+}
+
+resource "aws_eks_access_entry" "test" {
+  cluster_name  = aws_eks_cluster.cluster.name
+  principal_arn = "arn:aws:iam::906510885253:user/FF-User"
+}
+
+resource "aws_eks_access_policy_association" "example_admin" {
+  cluster_name  = aws_eks_cluster.cluster.name
+  principal_arn = "arn:aws:iam::906510885253:user/FF-User"
+
+  policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+
+  access_scope {
+    type = "cluster"
+  }
 }
 
 resource "aws_iam_role" "node_group" {
