@@ -6,6 +6,7 @@ from pydantic import BaseModel, EmailStr, constr, conint
 class ShirtClass(BaseModel):
     name:str
     brand:str
+    image_url:str
     test_value1:int
     test_value2:int
     test_value3:int
@@ -16,6 +17,7 @@ def shirt_return(shirt):
         "id": str(shirt["_id"]),
         "name": shirt["name"],
         "brand": shirt["brand"],
+        "img_url": shirt["img_url"],
         "test_value1": shirt["test_value1"],
         "test_value2": shirt["test_value2"],
         "test_value3": shirt["test_value3"]
@@ -33,6 +35,7 @@ def all_shirts(all_shirts):
 class TrouserClass(BaseModel):
     name:str
     brand:str
+    image_url:str
     test_value1:int
     test_value2:int
     test_value3:int
@@ -43,6 +46,7 @@ def trouser_return(trouser):
         "id": str(trouser["_id"]),
         "name": trouser["name"],
         "brand": trouser["brand"],
+        "img_url": trouser["img_url"],
         "test_value1": trouser["test_value1"],
         "test_value2": trouser["test_value2"],
         "test_value3": trouser["test_value3"]
@@ -60,6 +64,7 @@ def all_trousers(all_trousers):
 class DressClass(BaseModel):
     name:str
     brand:str
+    image_url:str
     test_value1:int
     test_value2:int
     test_value3:int
@@ -70,6 +75,7 @@ def dress_return(dress):
         "id": str(dress["_id"]),
         "name": dress["name"],
         "brand": dress["brand"],
+        "img_url": dress["img_url"],
         "test_value1": dress["test_value1"],
         "test_value2": dress["test_value2"],
         "test_value3": dress["test_value3"]
@@ -87,6 +93,7 @@ def all_dresses(all_dresses):
 class JacketClass(BaseModel):
     name:str
     brand:str
+    image_url:str
     test_value1:int
     test_value2:int
     test_value3:int
@@ -97,6 +104,7 @@ def jacket_return(jacket):
         "id": str(jacket["_id"]),
         "name": jacket["name"],
         "brand": jacket["brand"],
+        "img_url": jacket["img_url"],
         "test_value1": jacket["test_value1"],
         "test_value2": jacket["test_value2"],
         "test_value3": jacket["test_value3"]
@@ -114,6 +122,7 @@ def all_jackets(all_jackets):
 class ShoeClass(BaseModel):
     name:str
     brand:str
+    image_url:str
     test_value1:int
     test_value2:int
     test_value3:int
@@ -124,6 +133,7 @@ def shoe_return(shoe):
         "id": str(shoe["_id"]),
         "name": shoe["name"],
         "brand": shoe["brand"],
+        "img_url": shoe["img_url"],
         "test_value1": shoe["test_value1"],
         "test_value2": shoe["test_value2"],
         "test_value3": shoe["test_value3"]
@@ -141,6 +151,7 @@ def all_shoes(all_shoes):
 class SkirtClass(BaseModel):
     name:str
     brand:str
+    image_url:str
     test_value1:int
     test_value2:int
     test_value3:int
@@ -151,6 +162,7 @@ def skirt_return(skirt):
         "id": str(skirt["_id"]),
         "name": skirt["name"],
         "brand": skirt["brand"],
+        "img_url": skirt["img_url"],
         "test_value1": skirt["test_value1"],
         "test_value2": skirt["test_value2"],
         "test_value3": skirt["test_value3"]
