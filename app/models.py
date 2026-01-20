@@ -9,6 +9,7 @@ class ShirtClass(BaseModel):
     test_value1:int
     test_value2:int
     test_value3:int
+    img_url:str
 
 
 def shirt_return(shirt):
@@ -18,7 +19,8 @@ def shirt_return(shirt):
         "brand": shirt["brand"],
         "test_value1": shirt["test_value1"],
         "test_value2": shirt["test_value2"],
-        "test_value3": shirt["test_value3"]
+        "test_value3": shirt["test_value3"],
+        "img_url": shirt["img_url"]
     }
 
 def return_value2(all_shirts,value):
@@ -36,6 +38,7 @@ class TrouserClass(BaseModel):
     test_value1:int
     test_value2:int
     test_value3:int
+    img_url:str
 
 
 def trouser_return(trouser):
@@ -45,7 +48,8 @@ def trouser_return(trouser):
         "brand": trouser["brand"],
         "test_value1": trouser["test_value1"],
         "test_value2": trouser["test_value2"],
-        "test_value3": trouser["test_value3"]
+        "test_value3": trouser["test_value3"],
+        "img_url": trouser["img_url"]
     }
 
 def return_value2(all_trousers,value):
@@ -63,6 +67,7 @@ class DressClass(BaseModel):
     test_value1:int
     test_value2:int
     test_value3:int
+    img_url:str
 
 
 def dress_return(dress):
@@ -72,7 +77,8 @@ def dress_return(dress):
         "brand": dress["brand"],
         "test_value1": dress["test_value1"],
         "test_value2": dress["test_value2"],
-        "test_value3": dress["test_value3"]
+        "test_value3": dress["test_value3"],
+        "img_url": dress["img_url"]
     }
 
 def return_value2(all_dresses,value):
@@ -90,6 +96,7 @@ class JacketClass(BaseModel):
     test_value1:int
     test_value2:int
     test_value3:int
+    img_url:str
 
 
 def jacket_return(jacket):
@@ -99,7 +106,8 @@ def jacket_return(jacket):
         "brand": jacket["brand"],
         "test_value1": jacket["test_value1"],
         "test_value2": jacket["test_value2"],
-        "test_value3": jacket["test_value3"]
+        "test_value3": jacket["test_value3"],
+        "img_url": jacket["img_url"]
     }
 
 def return_value2(all_jackets,value):
@@ -117,6 +125,7 @@ class ShoeClass(BaseModel):
     test_value1:int
     test_value2:int
     test_value3:int
+    img_url:str
 
 
 def shoe_return(shoe):
@@ -126,7 +135,8 @@ def shoe_return(shoe):
         "brand": shoe["brand"],
         "test_value1": shoe["test_value1"],
         "test_value2": shoe["test_value2"],
-        "test_value3": shoe["test_value3"]
+        "test_value3": shoe["test_value3"],
+        "img_url": shoe["img_url"]
     }
 
 def return_value2(all_shoes,value):
@@ -144,6 +154,7 @@ class SkirtClass(BaseModel):
     test_value1:int
     test_value2:int
     test_value3:int
+    img_url:str
 
 
 def skirt_return(skirt):
@@ -153,7 +164,8 @@ def skirt_return(skirt):
         "brand": skirt["brand"],
         "test_value1": skirt["test_value1"],
         "test_value2": skirt["test_value2"],
-        "test_value3": skirt["test_value3"]
+        "test_value3": skirt["test_value3"],
+        "img_url": skirt["img_url"]
     }
 
 def return_value2(all_skirts,value):
