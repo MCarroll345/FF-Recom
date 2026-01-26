@@ -12,23 +12,23 @@ class ShirtClass(BaseModel):
     img_url:str
 
 
-def shirt_return(shirt):
+def item_return(item):
     return{
-        "id": str(shirt["_id"]),
-        "name": shirt["name"],
-        "brand": shirt["brand"],
-        "test_value1": shirt["test_value1"],
-        "test_value2": shirt["test_value2"],
-        "test_value3": shirt["test_value3"],
-        "img_url": shirt["img_url"]
+        "id": str(item["_id"]),
+        "name": item["name"],
+        "brand": item["brand"],
+        "test_value1": item["test_value1"],
+        "test_value2": item["test_value2"],
+        "test_value3": item["test_value3"],
+        "img_url": item["img_url"]
     }
 
 def return_value2(all_shirts,value):
     return [shirt_return(shirt) for shirt in all_shirts if (shirt.get("test_value2") == value)]
 
 
-def all_shirts(all_shirts):
-    return [shirt_return(shirt) for shirt in all_shirts]
+def all_items(all_items):
+    return [item_return(item) for item in all_items]
 
 #----------------------------------Trousers Models------------------------------------------------
 
