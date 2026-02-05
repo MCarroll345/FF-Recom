@@ -6,11 +6,5 @@ config = dotenv_values(".env")
 
 client = MongoClient("mongodb+srv://MCarroll123:eebee261202@fitfinder.uzlpzrs.mongodb.net/?retryWrites=true&w=majority&appName=FitFinder", server_api=ServerApi('1'))
 db = client.clothes
-shirts_db = db["shirts"]
-dress_db = db["dress"]
-jacket_db = db["jacket"]
-shoes_db = db["shoes"]
-skirt_db = db["skirt"]
-trousers_db = db["trousers"]
 
 
