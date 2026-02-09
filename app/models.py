@@ -21,16 +21,16 @@ class recomClass(BaseModel):
 
 def recom_return(rec1,rec2,rec3,rec4):
     return{
-        "id1": str(rec1["_id"]),
+        "id1": str(rec1["id"]),
         "name1": rec1["name"],
         "img_url1": rec1["img_url"],
-        "id2": str(rec2["_id"]),
+        "id2": str(rec2["id"]),
         "name2": rec2["name"],
         "img_url2": rec2["img_url"],
-        "id3": str(rec3["_id"]),
+        "id3": str(rec3["id"]),
         "name3": rec3["name"],
         "img_url3": rec3["img_url"],
-        "id4": str(rec4["_id"]),
+        "id4": str(rec4["id"]),
         "name4": rec4["name"],
         "img_url4": rec4["img_url"],
     }
@@ -91,6 +91,9 @@ def item_return(item):
 def return_value2(all_shirts,value):#
 
     return [shirt_return(shirt) for shirt in all_shirts if (shirt.get("test_value2") == value)]
+
+def return_total(c1,c2,c3,c4):
+    return [item_return(item) for item in all_items if ()]
 
 def all_items(all_items):
     return [item_return(item) for item in all_items]
