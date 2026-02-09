@@ -1,176 +1,99 @@
 # app/schemas.py
 from pydantic import BaseModel, EmailStr, constr, conint
+from typing import Optional
 
 #----------------------------------Shirts Models------------------------------------------------
 
-class ShirtClass(BaseModel):
+class recomClass(BaseModel):
+    rec1_name:str
+    rec2_name:str
+    rec3_name:str
+    rec4_name:str
+    rec1_id:str
+    rec2_id:str
+    rec3_id:str
+    rec4_id:str
+    rec1_img_url:str
+    rec2_img_url:str
+    rec3_img_url:str
+    rec4_img_url:str
+
+
+def recom_return(rec1,rec2,rec3,rec4):
+    return{
+        "id1": str(rec1["id"]),
+        "name1": rec1["name"],
+        "img_url1": rec1["img_url"],
+        "id2": str(rec2["id"]),
+        "name2": rec2["name"],
+        "img_url2": rec2["img_url"],
+        "id3": str(rec3["id"]),
+        "name3": rec3["name"],
+        "img_url3": rec3["img_url"],
+        "id4": str(rec4["id"]),
+        "name4": rec4["name"],
+        "img_url4": rec4["img_url"],
+    }
+
+
+
+#----------------------------------------------------------------- Clothes Read -------------------------------------------------------------------
+
+class ItemClass(BaseModel):
     name:str
     brand:str
-    test_value1:int
-    test_value2:int
-    test_value3:int
+    light:      Optional[int] = None
+    dark:       Optional[int] = None
+    bright:     Optional[int] = None
+    warm:       Optional[int] = None
+    cool:       Optional[int] = None
+    breathable: Optional[int] = None
+    cozy:       Optional[int] = None
+    lightweight:Optional[int] = None
+    fancy:      Optional[int] = None
+    casual:     Optional[int] = None
+    business:   Optional[int] = None
+    lounge:     Optional[int] = None
+    evening:    Optional[int] = None
+    minimalist: Optional[int] = None
+    vintage:    Optional[int] = None
+    modern:     Optional[int] = None
+    soft:       Optional[int] = None
+    comfortable:Optional[int] = None
+    layerable:  Optional[int] = None
     img_url:str
-
 
 def item_return(item):
     return{
         "id": str(item["_id"]),
         "name": item["name"],
         "brand": item["brand"],
-        "test_value1": item["test_value1"],
-        "test_value2": item["test_value2"],
-        "test_value3": item["test_value3"],
+        "light": item["light"],
+        "dark": item["dark"],
+        "bright": item["bright"],
+        "warm": item["warm"],
+        "cool": item["cool"],
+        "lightweight": item["lightweight"],
+        "fancy": item["fancy"],
+        "casual": item["casual"],
+        "business": item["business"],
+        "lounge": item["lounge"],
+        "evening": item["evening"],
+        "minimalist": item["minimalist"],
+        "vintage": item["vintage"],
+        "modern": item["modern"],
+        "soft": item["soft"],
+        "comfortable": item["comfortable"],
+        "layerable": item["layerable"],
         "img_url": item["img_url"]
     }
 
-def return_value2(all_shirts,value):
+def return_value2(all_shirts,value):#
+
     return [shirt_return(shirt) for shirt in all_shirts if (shirt.get("test_value2") == value)]
 
+def return_total(c1,c2,c3,c4):
+    return [item_return(item) for item in all_items if ()]
 
 def all_items(all_items):
     return [item_return(item) for item in all_items]
-
-#----------------------------------Trousers Models------------------------------------------------
-
-class TrouserClass(BaseModel):
-    name:str
-    brand:str
-    test_value1:int
-    test_value2:int
-    test_value3:int
-    img_url:str
-
-
-def trouser_return(trouser):
-    return{
-        "id": str(trouser["_id"]),
-        "name": trouser["name"],
-        "brand": trouser["brand"],
-        "test_value1": trouser["test_value1"],
-        "test_value2": trouser["test_value2"],
-        "test_value3": trouser["test_value3"],
-        "img_url": trouser["img_url"]
-    }
-
-def return_value2(all_trousers,value):
-    return [trouser_return(trouser) for trouser in all_trousers if (trouser.get("test_value2") == value)]
-
-
-def all_trousers(all_trousers):
-    return [trouser_return(trouser) for trouser in all_trousers]
-
-#----------------------------------Dress Models------------------------------------------------
-
-class DressClass(BaseModel):
-    name:str
-    brand:str
-    test_value1:int
-    test_value2:int
-    test_value3:int
-    img_url:str
-
-
-def dress_return(dress):
-    return{
-        "id": str(dress["_id"]),
-        "name": dress["name"],
-        "brand": dress["brand"],
-        "test_value1": dress["test_value1"],
-        "test_value2": dress["test_value2"],
-        "test_value3": dress["test_value3"],
-        "img_url": dress["img_url"]
-    }
-
-def return_value2(all_dresses,value):
-    return [dress_return(dress) for dress in all_dresses if (dress.get("test_value2") == value)]
-
-
-def all_dresses(all_dresses):
-    return [dress_return(dress) for dress in all_dresses]
-
-#----------------------------------Jackets Models------------------------------------------------
-
-class JacketClass(BaseModel):
-    name:str
-    brand:str
-    test_value1:int
-    test_value2:int
-    test_value3:int
-    img_url:str
-
-
-def jacket_return(jacket):
-    return{
-        "id": str(jacket["_id"]),
-        "name": jacket["name"],
-        "brand": jacket["brand"],
-        "test_value1": jacket["test_value1"],
-        "test_value2": jacket["test_value2"],
-        "test_value3": jacket["test_value3"],
-        "img_url": jacket["img_url"]
-    }
-
-def return_value2(all_jackets,value):
-    return [jacket_return(jacket) for jacket in all_jackets if (jacket.get("test_value2") == value)]
-
-
-def all_jackets(all_jackets):
-    return [jacket_return(jacket) for jacket in all_jackets]
-
-#----------------------------------Shoes Models------------------------------------------------
-
-class ShoeClass(BaseModel):
-    name:str
-    brand:str
-    test_value1:int
-    test_value2:int
-    test_value3:int
-    img_url:str
-
-
-def shoe_return(shoe):
-    return{
-        "id": str(shoe["_id"]),
-        "name": shoe["name"],
-        "brand": shoe["brand"],
-        "test_value1": shoe["test_value1"],
-        "test_value2": shoe["test_value2"],
-        "test_value3": shoe["test_value3"],
-        "img_url": shoe["img_url"]
-    }
-
-def return_value2(all_shoes,value):
-    return [shoe_return(shoe) for shoe in all_shoes if (shoe.get("test_value2") == value)]
-
-
-def all_shoes(all_shoes):
-    return [shoe_return(shoe) for shoe in all_shoes]
-
-#----------------------------------Skirts Models------------------------------------------------
-
-class SkirtClass(BaseModel):
-    name:str
-    brand:str
-    test_value1:int
-    test_value2:int
-    test_value3:int
-    img_url:str
-
-
-def skirt_return(skirt):
-    return{
-        "id": str(skirt["_id"]),
-        "name": skirt["name"],
-        "brand": skirt["brand"],
-        "test_value1": skirt["test_value1"],
-        "test_value2": skirt["test_value2"],
-        "test_value3": skirt["test_value3"],
-        "img_url": skirt["img_url"]
-    }
-
-def return_value2(all_skirts,value):
-    return [skirt_return(skirt) for skirt in all_skirts if (skirt.get("test_value2") == value)]
-
-
-def all_skirts(all_skirts):
-    return [skirt_return(skirt) for skirt in all_skirts]
