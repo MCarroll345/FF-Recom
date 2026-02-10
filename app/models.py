@@ -88,12 +88,5 @@ def item_return(item):
         "img_url": item["img_url"]
     }
 
-def return_value2(all_shirts,value):#
-
-    return [shirt_return(shirt) for shirt in all_shirts if (shirt.get("test_value2") == value)]
-
-def return_total(c1,c2,c3,c4):
-    return [item_return(item) for item in all_items if ()]
-
 def all_items(all_items):
     return [item_return(item) for item in all_items]
