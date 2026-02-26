@@ -51,12 +51,11 @@ class RabbitMQPublisher:
             
             message = {
                 "event_type": event_type,
-                "timestamp": datetime.now().isoformat(),
                 "data": data
             }
 
             channel.basic_publish(
-                exchange='notificiations_topic',
+                exchange='recom_topic',
                 routing_key=routing_key,
                 body=json.dumps(message),
                 properties=pika.BasicProperties(
