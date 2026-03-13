@@ -6,11 +6,15 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 6.20.0"
     }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~> 4.0"
+    }
   }
 }
 
 resource "aws_eks_cluster" "cluster" {
-  name     = var.name
+  name     = "FitFinder"
   role_arn = aws_iam_role.cluster.arn
   version  = "1.34"
 
@@ -46,6 +50,16 @@ data "aws_iam_policy_document" "cluster_assume_role" {
   }
 }
 
+data "tls_certificate" "eks" {
+  url = resource.aws_eks_cluster.cluster.identity[0].oidc[0].issuer
+}
+
+resource "aws_iam_openid_connect_provider" "eks" {
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = [data.tls_certificate.eks.certificates[0].sha1_fingerprint]
+  url             = resource.aws_eks_cluster.cluster.identity[0].oidc[0].issuer
+}
+
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role       = aws_iam_role.cluster.name
@@ -76,12 +90,12 @@ resource "aws_eks_node_group" "nodes" {
 
 resource "aws_eks_access_entry" "test" {
   cluster_name  = aws_eks_cluster.cluster.name
-  principal_arn = "arn:aws:iam::906510885253:user/FF-User"
+  principal_arn = "arn:aws:iam::304161164221:user/FF-User"
 }
 
 resource "aws_eks_access_policy_association" "example_admin" {
   cluster_name  = aws_eks_cluster.cluster.name
-  principal_arn = "arn:aws:iam::906510885253:user/FF-User"
+  principal_arn = "arn:aws:iam::304161164221:user/FF-User"
 
   policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
 

@@ -17,3 +17,7 @@ output "cluster_certificate_authority" {
   value       = aws_eks_cluster.cluster.certificate_authority
   description = "Certificate authority of the EKS cluster"
 }
+
+output "oidc_provider_arn" {
+  value = aws_iam_openid_connect_provider.eks.arn
+}
