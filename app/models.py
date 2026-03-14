@@ -2,22 +2,20 @@
 from pydantic import BaseModel, EmailStr, constr, conint
 from typing import Optional
 
-#----------------------------------Shirts Models------------------------------------------------
+#----------------------------------Recom Models------------------------------------------------
 
-class recomClass(BaseModel):
-    rec1_name:str
-    rec2_name:str
-    rec3_name:str
-    rec4_name:str
-    rec1_id:str
-    rec2_id:str
-    rec3_id:str
-    rec4_id:str
-    rec1_img_url:str
-    rec2_img_url:str
-    rec3_img_url:str
-    rec4_img_url:str
-
+def pub_recom_return(rec1,rec2,rec3,rec4,c1,c2,c3,c4,feedback):
+    return{
+        "rec1_id": str(rec1["id"]),
+        "rec2_id": str(rec2["id"]),
+        "rec3_id": str(rec3["id"]),
+        "rec4_id": str(rec4["id"]),
+        "attr1": c1,
+        "attr2": c2,
+        "attr3": c3,
+        "attr4": c4,
+        "feedback": feedback
+    }
 
 def recom_return(rec1,rec2,rec3,rec4):
     return{
