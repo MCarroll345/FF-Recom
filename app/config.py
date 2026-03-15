@@ -5,7 +5,7 @@ import os
 
 load_dotenv()
 
-client = MongoClient("mongodb+srv://MCarroll123:eebee261202@fitfinder.uzlpzrs.mongodb.net/?retryWrites=true&w=majority&appName=FitFinder", server_api=ServerApi('1'))
+client = MongoClient(os.getenv("MONGO_URI"), server_api=ServerApi('1'))
 db = client.clothes
 
 
