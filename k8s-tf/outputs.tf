@@ -1,5 +1,5 @@
 output "lb_ip" {
-  value = kubernetes_service.nginx.status.0.load_balancer.0.ingress.0.hostname
+  value = try(kubernetes_service.nginx.status[0].load_balancer[0].ingress[0].hostname, "not yet assigned")
 }
 
 output "cluster_endpoint" {
@@ -17,3 +17,4 @@ output "cluster_name" {
 output "keda_iam_role_arn" {
   value = aws_iam_role.keda_operator.arn
 }
+

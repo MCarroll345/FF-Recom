@@ -27,3 +27,9 @@ variable "instance_types" {
   type        = list(string)
   default     = ["t3.small"]
 }
+
+variable "container_port" {
+  description = "The port the Docker image listens on"
+  type        = number
+  default     = 8000
+}

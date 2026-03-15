@@ -140,6 +140,24 @@ data "aws_vpc" "default" {
   default = true
 }
 
+resource "aws_security_group_rule" "allow_http_inbound" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_eks_cluster.cluster.vpc_config[0].cluster_security_group_id
+}
+
+resource "aws_security_group_rule" "allow_container_port_inbound" {
+  type              = "ingress"
+  from_port         = var.container_port
+  to_port           = var.container_port
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_eks_cluster.cluster.vpc_config[0].cluster_security_group_id
+}
+
 data "aws_subnets" "default" {
   filter {
     name   = "vpc-id"

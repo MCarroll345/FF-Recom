@@ -3,6 +3,5 @@ __pycache__/
 *.pyc
 venv/
 .venv/
-env-pymongo-fastapi-crud/
 .terraform*
 terraform.tfstate*
