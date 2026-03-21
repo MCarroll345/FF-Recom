@@ -4,16 +4,16 @@ from typing import Optional
 
 #----------------------------------Recom Models------------------------------------------------
 
-def pub_recom_return(rec1,rec2,rec3,rec4,c1,c2,c3,c4,feedback):
+def pub_recom_return(recom,feedback):
     return{
-        "rec1_id": str(rec1["id"]),
-        "rec2_id": str(rec2["id"]),
-        "rec3_id": str(rec3["id"]),
-        "rec4_id": str(rec4["id"]),
-        "attr1": c1,
-        "attr2": c2,
-        "attr3": c3,
-        "attr4": c4,
+        "rec1_id": str(recom.id1),
+        "rec2_id": str(recom.id2),
+        "rec3_id": str(recom.id3),
+        "rec4_id": str(recom.id4),
+        "attr1": recom.attr1,
+        "attr2": recom.attr2,
+        "attr3": recom.attr3,
+        "attr4": recom.attr4,
         "feedback": feedback
     }
 
@@ -31,6 +31,19 @@ def recom_return(rec1,rec2,rec3,rec4):
         "id4": str(rec4["id"]),
         "name4": rec4["name"],
         "img_url4": rec4["img_url"],
+    }
+
+def recom_return3(rec1,rec2,rec3):
+    return{
+        "id1": str(rec1["id"]),
+        "name1": rec1["name"],
+        "img_url1": rec1["img_url"],
+        "id2": str(rec2["id"]),
+        "name2": rec2["name"],
+        "img_url2": rec2["img_url"],
+        "id3": str(rec3["id"]),
+        "name3": rec3["name"],
+        "img_url3": rec3["img_url"],
     }
 
 
@@ -60,6 +73,16 @@ class ItemClass(BaseModel):
     comfortable:Optional[int] = None
     layerable:  Optional[int] = None
     img_url:str
+
+class recomReturn(BaseModel):
+    id1: str
+    id2: str
+    id3: Optional[str] = None
+    id4: Optional[str] = None
+    attr1: str
+    attr2: str 
+    attr3: str
+    attr4: str
 
 def item_return(item):
     return{
