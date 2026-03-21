@@ -4,14 +4,11 @@ from bson import ObjectId
 from .models import *
 from .config import db
 from .publish import get_rabbitmq_publisher
+import random
+
+choice = ["pants", "skirt", "dress"]
 
 recomRouter = APIRouter()
-
-#Function to recieve all of the criteria
-#Function to retry? Recieve feedback sends message on rabbitmq channel
-#Returns a class of names, ids and urls
-#Will be sending back at least 4 items at a time which is going to be an issue
-#Make a function to add together all of the criteria scores together to see the best fit
 
 @recomRouter.get("/{cloth}/get")
 async def get_all(cloth: str):
@@ -29,24 +26,61 @@ async def get_recom(c1: str,c2: str,c3: str,c4: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching recommendation: {e}")
 
+@recomRouter.post("/dislike")
+async def dislike(recom: recomReturn):
+    try:
+        publisher = get_rabbitmq_publisher()
+        publisher.pubRecom(
+            "recom_topic",
+            "recom_queue",
+            pub_recom_return(recom,-1)
+        )
+        return recom
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching recommendation: {e}")
+
+@recomRouter.post("/like")
+async def like(recom: recomReturn):
+    try:
+        publisher = get_rabbitmq_publisher()
+        publisher.pubRecom(
+            "recom_topic",
+            "recom_queue",
+            pub_recom_return(recom,1)
+        )
+        return recom
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching recommendation: {e}")
+
 def collect_items(c1: str, c2: str, c3: str, c4: str):
-    rec1 = retrieveBestItem(c1,c2,c3,c4,"shirts")
-    rec2 = retrieveBestItem(c1,c2,c3,c4,"trousers")
-    rec3 = retrieveBestItem(c1,c2,c3,c4,"shoes")
-    rec4 = retrieveBestItem(c1,c2,c3,c4,"jacket")
+    select = random.choice(choice)
+    if select == "pants":
+        rec1 = retrieveBestItem(c1,c2,c3,c4,"shirts")
+        rec2 = retrieveBestItem(c1,c2,c3,c4,"trousers")
+        rec3 = retrieveBestItem(c1,c2,c3,c4,"shoes")
+        rec4 = retrieveBestItem(c1,c2,c3,c4,"jacket")
+        if not all([rec1, rec2, rec3, rec4]):
+            return {"error": "No recommendation found"}
+        return recom_return(rec1,rec2,rec3,rec4)
 
-    if not all([rec1, rec2, rec3, rec4]):
-        return {"error": "No recommendation found"}
+    elif select == "skirt":
+        rec1 = retrieveBestItem(c1,c2,c3,c4,"shirts")
+        rec2 = retrieveBestItem(c1,c2,c3,c4,"skirts")
+        rec3 = retrieveBestItem(c1,c2,c3,c4,"shoes")
+        rec4 = retrieveBestItem(c1,c2,c3,c4,"jacket")
+        if not all([rec1, rec2, rec3, rec4]):
+            return {"error": "No recommendation found"}
+        return recom_return(rec1,rec2,rec3,rec4)
 
-    publisher = get_rabbitmq_publisher()
-    publisher.pubRecom(
-        "recom_topic",
-        "recom_queue",
-        pub_recom_return(rec1,rec2,rec3,rec4,c1,c2,c3,c4,1)
-    )
-
-    return recom_return(rec1,rec2,rec3,rec4)
-
+    elif select == "dress":
+        rec1 = retrieveBestItem(c1,c2,c3,c4,"dresses")
+        rec2 = retrieveBestItem(c1,c2,c3,c4,"shoes")
+        rec3 = retrieveBestItem(c1,c2,c3,c4,"jacket")
+        if not all([rec1, rec2, rec3]):
+            return {"error": "No recommendation found"}
+        return recom_return3(rec1,rec2,rec3)
+    
+    return {"error": "No recommendation found"}
 
 def retrieveBestItem(c1: str, c2: str, c3: str, c4: str, cloth: str):
     data = list(db[cloth].find())
@@ -59,7 +93,6 @@ def retrieveBestItem(c1: str, c2: str, c3: str, c4: str, cloth: str):
             bestItem = item_return(item)
     
     return bestItem
-
 
 
     
