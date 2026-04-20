@@ -101,10 +101,6 @@ class recomReturn(BaseModel):
     attr3: str
     attr4: str
 
-def return_value2(all_shirts,value):#
-
-    return [shirt_return(shirt) for shirt in all_shirts if (shirt.get("test_value2") == value)]
-
 def return_total(c1,c2,c3,c4):
     return [item_return(item) for item in all_items if ()]
 
